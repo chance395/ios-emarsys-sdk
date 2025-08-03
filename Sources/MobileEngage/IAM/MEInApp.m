@@ -100,7 +100,7 @@
             weakSelf.currentInAppMessage = message;
             MEIAMViewController *meiamViewController = [weakSelf.iamViewControllerProvider provideViewController];
             meiamViewController.loadErrorDelegate = self;
-            [meiamViewController loadMessage:@""
+            [meiamViewController loadMessage:message.html
                            completionHandler:^{
                 if (message.response && weakSelf.timestampProvider) {
                     weakSelf.inAppLog = [[EMSInAppLog alloc] initWithMessage:message
