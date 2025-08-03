@@ -73,6 +73,24 @@ didFinishNavigation:(null_unspecified WKNavigation *)navigation {
             weakSelf.completionHandler();
         });
     }
+
+    [webView evaluateJavaScript:@"document.body.innerText.trim().length"
+                 completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+           if (error) {
+               NSLog(@"🍺JS 执行失败: %@", error.localizedDescription);
+               return;
+           }
+
+           if ([result isKindOfClass:[NSNumber class]]) {
+               NSInteger length = [(NSNumber *)result integerValue];
+               if (length == 0) {
+                   NSLog(@"🍺页面可视内容为空");
+                   [self handleWebViewLoadError:nil]; // 你可以在这里做兜底处理
+               } else {
+                   NSLog(@"🍺页面加载成功，内容长度为 %ld", (long)length);
+               }
+           }
+       }];
 }
 
 - (void)webView:(WKWebView *)webView
