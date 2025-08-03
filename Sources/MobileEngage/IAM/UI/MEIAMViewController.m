@@ -78,12 +78,16 @@ didFinishNavigation:(null_unspecified WKNavigation *)navigation {
 - (void)webView:(WKWebView *)webView
 didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation
        withError:(NSError *)error {
+    NSLog(@"error didFailProvisionalNavigation");
+
     [self handleWebViewLoadError:error];
 }
 
 - (void)webView:(WKWebView *)webView
 didFailNavigation:(null_unspecified WKNavigation *)navigation
        withError:(NSError *)error {
+    NSLog(@"error didFailNavigation");
+
     [self handleWebViewLoadError:error];
 }
 
@@ -92,7 +96,7 @@ didFailNavigation:(null_unspecified WKNavigation *)navigation
 - (void)handleWebViewLoadError:(NSError *)error {
     if (self.hasAlreadyHandledError) return;
     self.hasAlreadyHandledError = YES;
-    
+    NSLog(@"error handle");
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([self.loadErrorDelegate respondsToSelector:@selector(closeInAppWithCompletionHandler:)]) {
             [self.loadErrorDelegate closeInAppWithCompletionHandler:nil];
